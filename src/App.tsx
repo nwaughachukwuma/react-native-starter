@@ -17,7 +17,6 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-
 import {
   Header,
   LearnMoreLinks,
@@ -25,6 +24,8 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { primaryTheme } from 'utils'
 
 declare var global: {HermesInternal: null | {}};
 
@@ -115,4 +116,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default () => {
+  
+  return (
+    // @ts-ignore
+    <PaperProvider theme={primaryTheme()}>
+      <App />
+    </PaperProvider>
+  )
+};

@@ -7,11 +7,39 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "postinstall": "cross-os postinstall"
+  },
+  "cross-os": {
+    "postinstall": {
+      "darwin": "cd ios && pod install && cd ..",
+      "win32": "echo 'add post install actions here'",
+      "linux": "echo 'add post install actions here'"
+    },
+    "test": {
+      "darwin": "TZ=UTC jest",
+      "win32": "set TZ=UTC && jest",
+      "linux": "TZ=UTC jest"
+    },
+    "clean-build": {
+      "darwin": "rm -rf ios/build/; kill $(lsof -t -i:8081); react-native run-ios",
+      "win32": "cd android && ./gradlew clean && cd .. && yarn dev-android",
+      "linux": "echo 'Not supported';"
+    }
   },
   "dependencies": {
+    "babel-plugin-module-resolver": "^3.2.0",
+    "cross-os": "^1.3.0",
     "react": "16.9.0",
-    "react-native": "0.61.5"
+    "react-native": "0.61.5",
+    "react-native-dotenv": "^0.2.0",
+    "react-native-gesture-handler": "^1.5.3",
+    "react-native-paper": "^3.4.0",
+    "react-native-reanimated": "^1.4.0",
+    "react-native-safe-area-context": "^0.6.2",
+    "react-native-screens": "^2.0.0-alpha.22",
+    "react-native-vector-icons": "^6.6.0",
+    "react-navigation": "^4.0.10"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -23,6 +51,7 @@
     "@typescript-eslint/eslint-plugin": "^2.12.0",
     "@typescript-eslint/parser": "^2.12.0",
     "babel-jest": "^24.9.0",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.56.0",
