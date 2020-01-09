@@ -1,4 +1,4 @@
-import { configureFonts, DefaultTheme } from 'react-native-paper';
+import { configureFonts, DefaultTheme, DarkTheme } from 'react-native-paper';
 
 const fontConfig = {
   default: {
@@ -25,10 +25,12 @@ const fontConfig = {
   },
 };
 
-export const primaryTheme = (dark = false) => ({
-    ...DefaultTheme,
+export const primaryTheme = (dark = false) => {
+  const themeType = !dark ? {...DefaultTheme}: {...DarkTheme}
+  return {
+    ...themeType,
     colors: {
-      ...DefaultTheme.colors,
+      ...themeType.colors,
       primary: 'tomato',
       accent: 'yellow',
     },
@@ -36,4 +38,4 @@ export const primaryTheme = (dark = false) => ({
     mode: 'adaptive',
     // @ts-ignore
     fonts: configureFonts(fontConfig)
-});
+}};

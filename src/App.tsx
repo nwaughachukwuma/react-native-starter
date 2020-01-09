@@ -9,6 +9,7 @@
  */
 
 import React from 'react';
+import {useState, useEffect} from 'react'
 import {
   StyleSheet,
 } from 'react-native';
@@ -17,11 +18,43 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { primaryTheme } from 'utils'
-import AppNavigator from 'networking/navigators'
+// import AppNavigator from 'networking/navigators'
+import Starter from 'screens/starter'
+import HomeScreen from 'screens/home'
+import {PreferencesContext} from 'utils/reactpatterns/contextapi'
+
 
 const App = () => {
+
+  const [darkMode, setDarkMode] = useState<boolean>(true);
+
+  useEffect(() => {
+
+    // on change save app theme to storage
+    return () => {
+      // remove all listeners
+    }
+  }, [darkMode]);
+
+  const _toggleTheme = () => {
+    setDarkMode(!darkMode)
+    // _savePreferences
+  };
+
   return (
-    <AppNavigator />
+    // @ts-ignore
+    <PaperProvider theme={primaryTheme(darkMode)}>
+      <PreferencesContext.Provider
+        value={{
+          toggleTheme: _toggleTheme,
+          isRTL: false,
+          isDarkMode: darkMode,
+          isOnBackground: false, //appState === 'inactive'? true: false
+        }}
+      >
+        <HomeScreen />
+      </PreferencesContext.Provider>
+    </PaperProvider>
   );
 };
 
@@ -64,12 +97,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default () => {
-  
-  return (
-    // @ts-ignore
-    <PaperProvider theme={primaryTheme()}>
-      <App />
-    </PaperProvider>
-  )
-};
+export default App

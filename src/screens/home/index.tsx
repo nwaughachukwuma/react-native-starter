@@ -1,12 +1,25 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import {withTheme} from 'react-native-paper'
 
-export default class HomeScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home Screen</Text>
-      </View>
-    );
-  }
+
+type Props = {
+  theme?: {colors: object, dark: boolean}
 }
+
+const HomeScreen: React.FC<Props> = (props) => {
+
+  const {
+    theme: {dark, colors}
+  } = props
+
+  console.log('theme colors is: ', colors)
+
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.background }}>
+      <Text style={{}}>Home Screen</Text>
+    </View>
+  );
+}
+
+export default withTheme(HomeScreen)
