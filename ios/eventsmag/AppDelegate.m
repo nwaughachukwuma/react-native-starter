@@ -5,6 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+@import UIKit;
+@import Firebase;
+
 #import "AppDelegate.h"
 
 #import <React/RCTBridge.h>
@@ -15,6 +18,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  // Firebase configs
+  if ([FIRApp defaultApp] == nil) {
+    [FIRApp configure];
+  }
+  
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"eventsmag"
