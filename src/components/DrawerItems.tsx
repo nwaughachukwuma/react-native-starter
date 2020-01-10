@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import {withTheme, Avatar, Text, Switch} from 'react-native-paper'
 import {scale} from 'react-native-size-matters'
+import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 import {images} from 'utils'
 import {SectionItem, SectionHeader} from './sections'
@@ -55,24 +56,44 @@ const menuItems = [
   { label: "Feedback", icon: "user", key: 1, route: null }
 ];
 
-export const CustomDrawerComponent: React.FC<Props | any> = props => (
-  <View>
-    <ScrollView>
-      <SafeAreaView
-        style={styles.container}
-        forceInset={{ top: 'always', horizontal: 'never' }}
-      >
-        <ProfileSection
-            {...props}
-            // avatarBackground={avatarBackground}
-            // onPress={() => this.profileModal.open()} //* deprecated for now for time sake. Will work on it after release
-            onPress={() => props.navigation.navigate("Home")}
-          />
-        <MemoizedMenuSection {...props} />
-      </SafeAreaView>
-    </ScrollView>
-  </View>
-);
+export const CustomDrawerComponent: React.FC<Props | any> = props => {
+  
+  useEffect(() => {
+    // use an IIFE
+    (async function runAuth() {
+      try {
+        // await auth().signInAnonymously();
+      } catch (e) {
+        switch (e.code) {
+          case 'auth/operation-not-allowed':
+            console.log('Enable anonymous in your firebase console.');
+            break;
+          default:
+            console.error(e);
+            break;
+        }
+      }
+    })()
+  }, [])
+  return (
+    <View>
+      <ScrollView>
+        <SafeAreaView
+          style={styles.container}
+          forceInset={{ top: 'always', horizontal: 'never' }}
+        >
+          <ProfileSection
+              {...props}
+              // avatarBackground={avatarBackground}
+              // onPress={() => this.profileModal.open()} //* deprecated for now for time sake. Will work on it after release
+              onPress={() => props.navigation.navigate("Home")}
+            />
+          <MemoizedMenuSection {...props} />
+        </SafeAreaView>
+      </ScrollView>
+    </View>
+  )
+};
 
 export const ProfileSection: React.FC<Props | any> = (props) => {
   const {

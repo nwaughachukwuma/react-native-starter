@@ -13,16 +13,22 @@ import {useState, useEffect} from 'react'
 import {
   StatusBar,
   Platform,
-  InteractionManager
+  ActivityIndicator
 } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import AsyncStorage from '@react-native-community/async-storage';
+import { Provider } from 'react-redux'
 import { primaryTheme, appColors } from 'utils'
 import AppNavigator from 'networking/navigators'
 import {PreferencesContext} from 'utils/reactpatterns/contextapi'
+import createStore, { persistor, rrfProps } from "networking/redux";
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase'
+import { PersistGate } from "redux-persist/integration/react";
 
 
 const isIOS = Platform.OS === 'ios'
+const store: any = createStore;
+
 const App = () => {
 
   const [darkMode, setDarkMode] = useState<boolean>(false);
@@ -63,7 +69,6 @@ const App = () => {
   const appTheme = primaryTheme(darkMode)
 
   return (
-    // @ts-ignore
     <PaperProvider theme={appTheme}>
       <PreferencesContext.Provider
         value={{
@@ -99,4 +104,16 @@ const App = () => {
   );
 };
 
-export default App
+export function StoreWrapper(){
+  return (
+    <Provider store={store}>
+      <ReactReduxFirebaseProvider {...rrfProps}>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </ReactReduxFirebaseProvider>
+    </Provider>
+  )
+}
+
+export default StoreWrapper

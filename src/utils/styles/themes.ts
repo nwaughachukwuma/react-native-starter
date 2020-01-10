@@ -35,7 +35,7 @@ export const primaryTheme = (dark = false) => {
       accent: 'yellow',
     },
     dark,
-    mode: 'adaptive',
+    // mode: 'adaptive',
     // @ts-ignore
     fonts: configureFonts(fontConfig)
 }};
