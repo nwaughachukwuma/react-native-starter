@@ -8,7 +8,7 @@
  * @format
  */
 
-import React from 'react';
+import * as React from 'react';
 import {useState, useEffect} from 'react'
 import {
   StatusBar,
@@ -55,7 +55,7 @@ const App = () => {
   const _toggleTheme = () => {
     setDarkMode(!darkMode)
   };
-  
+
   const _toggleRTL = () => {
 
   }

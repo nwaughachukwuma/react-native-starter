@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { View } from 'react-native'
 import { withTheme, Text, Divider } from 'react-native-paper'
 import { defaultStyles, scaledStyles } from 'utils'

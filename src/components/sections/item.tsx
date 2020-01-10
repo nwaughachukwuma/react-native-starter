@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { useState, useCallback } from "react"
 import { TouchableOpacity, View } from "react-native";
 import { withTheme, Text, List } from "react-native-paper";

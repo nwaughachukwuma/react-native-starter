@@ -2,7 +2,7 @@
  * This is a memoization helper for class functions
  * See doc: https://github.com/alexreardon/memoize-one
  */
-import React from 'react'
+import * as React from 'react'
 import memoizeOne from 'memoize-one'
 import isEqual from 'lodash.isequal'
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { useState, useCallback, useEffect } from 'react'
 import {
   ScrollView,
@@ -90,6 +90,7 @@ export const ProfileSection: React.FC<Props | any> = (props) => {
       <TouchableOpacity
         onPress={onPress}
         style={styles.profileContainer}
+        activeOpacity={0.8}
       >
         <ImageBackground
           source={{ uri: images.photo_bg }}
@@ -142,8 +143,6 @@ export const MenuSection: React.FC<Props|any> = (props) => {
     navigation,
     theme: { dark, colors },
     toggleTheme,
-    scene,
-    onDriverDetailsPress
   } = props;
 
   const _setDrawerItem = useCallback(
