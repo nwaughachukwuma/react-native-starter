@@ -11,14 +11,12 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
 import {
-  StyleSheet,
   StatusBar,
-  Platform
+  Platform,
+  InteractionManager
 } from 'react-native';
-import {
-  Colors
-} from 'react-native/Libraries/NewAppScreen';
 import { Provider as PaperProvider } from 'react-native-paper';
+import AsyncStorage from '@react-native-community/async-storage';
 import { primaryTheme, appColors } from 'utils'
 import AppNavigator from 'networking/navigators'
 import {PreferencesContext} from 'utils/reactpatterns/contextapi'
@@ -27,11 +25,28 @@ import {PreferencesContext} from 'utils/reactpatterns/contextapi'
 const isIOS = Platform.OS === 'ios'
 const App = () => {
 
-  const [darkMode, setDarkMode] = useState<boolean>(true);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
 
   useEffect(() => {
+    AsyncStorage.getItem("preferences").then(
+      async result => {
+        const res = result? JSON.parse(result): {}
+        if (res) {
+          setDarkMode(res.isDarkMode)
+        }
+      }
+    )
+  }, [])
 
+  useEffect(() => {
     // on change save app theme to storage
+    try {
+      AsyncStorage.setItem("preferences",
+        JSON.stringify({
+          isDarkMode: darkMode,
+        })
+      )
+    } catch (e) {}
     return () => {
       // remove all listeners
     }
@@ -39,8 +54,8 @@ const App = () => {
 
   const _toggleTheme = () => {
     setDarkMode(!darkMode)
-    // _savePreferences
   };
+  
   const _toggleRTL = () => {
 
   }

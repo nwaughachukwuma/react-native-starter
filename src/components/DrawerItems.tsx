@@ -1,21 +1,24 @@
 import React from 'react';
+import { useState, useCallback, useEffect } from 'react'
 import {
   ScrollView,
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
   View,
-  Platform,
-  ImageBackground
+  ImageBackground,
+  Alert
 } from 'react-native'
 import { DrawerItems } from 'react-navigation-drawer';
-import {withTheme, Avatar, Text} from 'react-native-paper'
+import {withTheme, Avatar, Text, Switch} from 'react-native-paper'
 import {scale} from 'react-native-size-matters'
+import AsyncStorage from '@react-native-community/async-storage';
 import {images} from 'utils'
+import {SectionItem} from './sections'
 
 
 type Props = {
-
+  theme: {colors?: any, dark?: any}
 }
 
 const styles = StyleSheet.create({
@@ -24,24 +27,34 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
 
+    // marginBottom: scale(10),
   },
   imageBgContainer: {
     top: scale(5),
     paddingLeft: scale(15),
-    marginBottom: scale(10),
     height: 'auto'
   },
   avatarContainer: {
-    top: scale(10),
-    marginBottom: scale(15)
+    marginTop: scale(10),
+    marginBottom: scale(10)
+  },
+  userCred: {
+    marginBottom: scale(10),
   },
   username: {
     fontWeight: '500', 
-    fontSize: scale(20)
+    fontSize: scale(20),
+    color: '#fff'
+  },
+  useremail: {
+    color: '#fff'
   }
 });
 
-const isIOS = Platform.OS === 'ios'
+const menuItems = [
+  { label: "Personal", icon: "user", key: 0, route: null },
+  { label: "Feedback", icon: "user", key: 1, route: null }
+];
 
 export const CustomDrawerComponent: React.FC<Props | any> = props => (
   <ScrollView>
@@ -56,6 +69,7 @@ export const CustomDrawerComponent: React.FC<Props | any> = props => (
           onPress={() => props.navigation.navigate("Home")}
         />
       <DrawerItems {...props} />
+      <MemoizedMenuSection {...props} />
     </SafeAreaView>
   </ScrollView>
 );
@@ -87,12 +101,96 @@ export const ProfileSection: React.FC<Props | any> = (props) => {
               source={{ uri: avatar? avatar : images.profile_photo }}
             />
           </View>
-          <Text style={styles.username}>{userName}</Text>
-          <Text>{userEmail}</Text>
+          <View style={styles.userCred}>
+            <Text style={styles.username}>{userName}</Text>
+            <Text style={styles.useremail}>{userEmail}</Text>
+          </View>
         </ImageBackground>
       </TouchableOpacity>
     </View>
   );
 }
+
+const SwitchComponent = (props: any) => {
+  const [isSwitchOn, setIsSwitchOn] = useState<boolean|any>(false)
+  // console.log('switch component props', props)
+  useEffect(() => {
+    setIsSwitchOn(props.dark)
+  }, [])
+  
+  const valueChanged = useCallback(
+    (value) => {
+      props.toggleTheme();
+      setIsSwitchOn(value);
+    },
+    [isSwitchOn]
+  )
+  
+  return (
+    <Switch
+      {...props}
+      value={isSwitchOn}
+      onValueChange={valueChanged}
+      style={{marginTop: 5, marginRight: 10}}
+    />
+  )
+}
+
+export const MenuSection: React.FC<Props|any> = (props) => {
+  const [drawerIndex, setDrawerIndex] = useState<number|any>(null)
+  const {
+    navigation,
+    theme: { dark, colors },
+    toggleTheme,
+    scene,
+    onDriverDetailsPress
+  } = props;
+
+  const _setDrawerItem = useCallback(
+    (index: number, route = null) => {
+      setDrawerIndex(index);
+      if (route) {
+        navigation.navigate(route);
+      }
+    }, []
+  );
+
+  return (
+    <View>
+      {/* <SectionHeader {...this.props} title="Settings - v1.0 (73)" /> */}
+      {menuItems.map((props, index) => (
+        <SectionItem
+          {...props}
+          key={props.key}
+          onPress={() => _setDrawerItem(index, props.route)}
+          iconColor={colors.text}
+          iconLeft={props.icon}
+          label={props.label}
+          labelStyle={[
+            {
+              fontWeight: props.key === drawerIndex ? "bold" : "normal"
+            }
+          ]}
+        />
+      ))}
+      <SectionItem
+        label={dark ? "Dark Mode" : "Dark Mode"}
+        onPress={toggleTheme}
+        iconLeft={dark? "moon": 'sun'}
+        ItemRight={(ownProps: any) => <SwitchComponent dark={dark} toggleTheme={toggleTheme} {...ownProps} />}
+        disablePress={true}
+        iconColor={colors.text}
+        labelStyle={[
+          {
+            color: colors.text,
+            fontStyle: "italic"
+          }
+        ]}
+      />
+    </View>
+  );
+}
+
+const MemoizedMenuSection = React.memo(MenuSection)
 
 export default withTheme(CustomDrawerComponent)
