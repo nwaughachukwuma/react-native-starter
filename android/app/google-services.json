@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "387976712874",
+    "firebase_url": "https://eventsmag-dd342.firebaseio.com",
+    "project_id": "eventsmag-dd342",
+    "storage_bucket": "eventsmag-dd342.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387976712874:android:788e94525a9bf91e",
+        "android_client_info": {
+          "package_name": "com.hbruw.eventsmag"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "387976712874-mohnv4up7tef2rtiqu7i09pqk22mkbqd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hbruw.eventsmag",
+            "certificate_hash": "33d6ec115044927695d68a37e4810702467b9baf"
+          }
+        },
+        {
+          "client_id": "387976712874-opvoi1mcfqkjj8bv2ap1k46je6iol73i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hbruw.eventsmag",
+            "certificate_hash": "c4e43cac75520853a8a2b22598619921243a41ab"
+          }
+        },
+        {
+          "client_id": "387976712874-37rovr5ss8ohh0hldn9af3is57s5qn7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEwx73uX3M_g0AW1W7XjGtLcX3pq2jhEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "387976712874-37rovr5ss8ohh0hldn9af3is57s5qn7d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "387976712874-2or77slc1r4jujlfs0va1u936lp5th88.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hbruw.eventsmag"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

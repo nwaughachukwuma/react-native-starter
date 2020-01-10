@@ -1,4 +1,4 @@
-package com.eventsmag;
+package com.hbruw.eventsmag;
 
 import com.facebook.react.ReactActivity;
 

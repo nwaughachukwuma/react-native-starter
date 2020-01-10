@@ -1,4 +1,4 @@
-package com.eventsmag;
+package com.hbruw.eventsmag;
 
 import android.app.Application;
 import android.content.Context;
