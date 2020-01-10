@@ -9,12 +9,11 @@ import {
   ImageBackground,
   Alert
 } from 'react-native'
-import { DrawerItems } from 'react-navigation-drawer';
 import {withTheme, Avatar, Text, Switch} from 'react-native-paper'
 import {scale} from 'react-native-size-matters'
 import AsyncStorage from '@react-native-community/async-storage';
 import {images} from 'utils'
-import {SectionItem} from './sections'
+import {SectionItem, SectionHeader} from './sections'
 
 
 type Props = {
@@ -57,21 +56,22 @@ const menuItems = [
 ];
 
 export const CustomDrawerComponent: React.FC<Props | any> = props => (
-  <ScrollView>
-    <SafeAreaView
-      style={styles.container}
-      forceInset={{ top: 'always', horizontal: 'never' }}
-    >
-      <ProfileSection
-          {...props}
-          // avatarBackground={avatarBackground}
-          // onPress={() => this.profileModal.open()} //* deprecated for now for time sake. Will work on it after release
-          onPress={() => props.navigation.navigate("Home")}
-        />
-      <DrawerItems {...props} />
-      <MemoizedMenuSection {...props} />
-    </SafeAreaView>
-  </ScrollView>
+  <View>
+    <ScrollView>
+      <SafeAreaView
+        style={styles.container}
+        forceInset={{ top: 'always', horizontal: 'never' }}
+      >
+        <ProfileSection
+            {...props}
+            // avatarBackground={avatarBackground}
+            // onPress={() => this.profileModal.open()} //* deprecated for now for time sake. Will work on it after release
+            onPress={() => props.navigation.navigate("Home")}
+          />
+        <MemoizedMenuSection {...props} />
+      </SafeAreaView>
+    </ScrollView>
+  </View>
 );
 
 export const ProfileSection: React.FC<Props | any> = (props) => {
@@ -157,7 +157,7 @@ export const MenuSection: React.FC<Props|any> = (props) => {
 
   return (
     <View>
-      {/* <SectionHeader {...this.props} title="Settings - v1.0 (73)" /> */}
+      <SectionHeader {...props} title="Menu" />
       {menuItems.map((props, index) => (
         <SectionItem
           {...props}
