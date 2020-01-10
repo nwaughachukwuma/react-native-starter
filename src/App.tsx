@@ -12,18 +12,19 @@ import React from 'react';
 import {useState, useEffect} from 'react'
 import {
   StyleSheet,
+  StatusBar,
+  Platform
 } from 'react-native';
 import {
   Colors
 } from 'react-native/Libraries/NewAppScreen';
 import { Provider as PaperProvider } from 'react-native-paper';
-import { primaryTheme } from 'utils'
-// import AppNavigator from 'networking/navigators'
-import Starter from 'screens/starter'
-import HomeScreen from 'screens/home'
+import { primaryTheme, appColors } from 'utils'
+import AppNavigator from 'networking/navigators'
 import {PreferencesContext} from 'utils/reactpatterns/contextapi'
 
 
+const isIOS = Platform.OS === 'ios'
 const App = () => {
 
   const [darkMode, setDarkMode] = useState<boolean>(true);
@@ -40,61 +41,47 @@ const App = () => {
     setDarkMode(!darkMode)
     // _savePreferences
   };
+  const _toggleRTL = () => {
+
+  }
+
+  const appTheme = primaryTheme(darkMode)
 
   return (
     // @ts-ignore
-    <PaperProvider theme={primaryTheme(darkMode)}>
+    <PaperProvider theme={appTheme}>
       <PreferencesContext.Provider
         value={{
           toggleTheme: _toggleTheme,
+          toggleRTL: _toggleRTL,
           isRTL: false,
           isDarkMode: darkMode,
           isOnBackground: false, //appState === 'inactive'? true: false
         }}
       >
-        <HomeScreen />
+        {isIOS || Platform.Version > 23 ? ( //* Set barColor to black for Android for consistency
+          <StatusBar
+            backgroundColor={darkMode ? appColors.white: appColors.black}
+            barStyle={darkMode ? "light-content" : "dark-content"}
+            animated={true}
+          />
+        ) : Platform.Version > 28 ? (
+          <StatusBar
+            backgroundColor={appColors.black}
+            barStyle={"dark-content"}
+            animated={true}
+          />
+        ) : (
+          <StatusBar
+            backgroundColor={appColors.black}
+            barStyle={"light-content"}
+            animated={true}
+          />
+        )}
+        <AppNavigator screenProps={{ appTheme }} theme={darkMode? 'dark': 'light'} />
       </PreferencesContext.Provider>
     </PaperProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
 
 export default App

@@ -39,3 +39,8 @@ export const primaryTheme = (dark = false) => {
     // @ts-ignore
     fonts: configureFonts(fontConfig)
 }};
+
+export const appColors = {
+  white: '#fff',
+  black: '#000'
+}

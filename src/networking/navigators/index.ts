@@ -1,20 +1,15 @@
 import React from 'react';
-import { createAppContainer } from 'react-navigation';
-// import { createStackNavigator } from 'react-navigation-stack';
-// import HomeScreen from 'screens/home'
-// import Starter from 'screens/starter'
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import get from 'lodash.get'
+import AppNavigator from './main'
+import AuthNavigator from './auth'
 
-// const AppNavigator = createStackNavigator({
-//         Home: {
-//             screen: HomeScreen,
-//         },
-//         Starter: {
-//             screen: Starter
-//         }, 
-//     },
-//     {
-//         initialRouteName: 'Starter'
-//     }
-// );
+const switchNavigator = createSwitchNavigator({
+        Auth: AuthNavigator,
+        Main: AppNavigator,
+        Onboarding: AppNavigator
+    },
+    { initialRouteName: "Auth" }
+)
 
-// export default createAppContainer(AppNavigator);
+export default createAppContainer(switchNavigator);
