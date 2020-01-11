@@ -3,11 +3,11 @@ import { persistStore, persistReducer } from 'redux-persist';
 // @ts-ignore
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import RNFirebase from '@react-native-firebase/app';
-import '@react-native-firebase/database';
-// import '@react-native-firebase/auth';
+import '@react-native-firebase/auth';
 import '@react-native-firebase/firestore';
-import { getFirebase } from 'react-redux-firebase';
-import { actionTypes } from 'redux-firestore';
+import '@react-native-firebase/database';
+import { getFirebase, createFirebaseInstance } from 'react-redux-firebase';
+import { createFirestoreInstance, actionTypes } from 'redux-firestore';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from '../sagas';
 import AsyncStorage from "@react-native-community/async-storage";
@@ -56,7 +56,7 @@ export const reduxFirebaseConfig = {
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
-export default (rootReducer: any, initialState = { _persist: { version: 5, rehydrated: true }, firebase: {}, firestore: {} }) => {
+export default (rootReducer: any, initialState = { _persist: { version: 6, rehydrated: true }, firebase: {}, firestore: {} }) => {
    
     const persistConfig = {
         key: 'root',
@@ -70,9 +70,10 @@ export default (rootReducer: any, initialState = { _persist: { version: 5, rehyd
     //@ts-ignore
     let firebase = RNFirebase.initializeApp(reactNativeFirebaseConfig);
     // Initialize other services on firebase instance
+    RNFirebase.firestore();
     // firebase.functions(); // <- needed if using httpsCallable
-    const composeEnhancer = compose;
 
+    const composeEnhancer = compose;
     // persist reducer
     const persistedReducer = persistReducer(persistConfig, rootReducer);
     const store = createStore(
@@ -107,6 +108,10 @@ export default (rootReducer: any, initialState = { _persist: { version: 5, rehyd
         firebase,
         config: reduxFirebaseConfig,
     }
+    
+    const firestoreInstance = {
+        createFirestoreInstance, // <- needed if using firestore
+    }
 
-    return { store, persistor, reduxFirebaseProps };
+    return { store, persistor, reduxFirebaseProps, firestoreInstance };
 };

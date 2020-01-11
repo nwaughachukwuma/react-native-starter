@@ -1,11 +1,9 @@
 import { combineReducers } from 'redux';
 import { createFirestoreInstance, firestoreReducer } from 'redux-firestore'
-import { firebaseReducer } from 'react-redux-firebase'
+import { firebaseReducer, createFirebaseInstance } from 'react-redux-firebase'
 // import { reducer as formReducer } from 'redux-form';
 import configureStore from './configurestore';
-import configureExtendedFirebase from './firebaseinstance'
 // import { reducer as networkReducer} from './network';
-
 
 
 export const reducers = combineReducers({
@@ -28,18 +26,31 @@ export const rootReducer = reducers;
 const { 
     store,
     persistor,
-    reduxFirebaseProps 
+    reduxFirebaseProps,
+    firestoreInstance 
 } = configureStore(rootReducer);
+
+export interface ReduxState {
+    firestore: any,
+    firebase: any,
+}
+export type ReduxDispatch = typeof store.dispatch
 
 const rrfProps = {
     ...reduxFirebaseProps,
     dispatch: store.dispatch,
-    createFirestoreInstance // <- needed if using firestore
+    ...firestoreInstance
+    //createFirestoreInstance // <- needed if using firestore
 }
 
-// create extended firebase instance
+export function configureExtendedFirebase(dispatch: any) {
+    const {firebase, config: rrfConfig} = reduxFirebaseProps;
+    //@ts-ignore
+    createFirebaseInstance(firebase, rrfConfig, dispatch);
+    return firebase;
+}
+// create an extended firebase instance
 const extendedFirebase = configureExtendedFirebase(store.dispatch);
 
 export { store, persistor, rrfProps, extendedFirebase }
-
 export default store;
