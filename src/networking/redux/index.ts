@@ -30,11 +30,8 @@ const {
     firestoreInstance 
 } = configureStore(rootReducer);
 
-export interface ReduxState {
-    firestore: any,
-    firebase: any,
-}
-export type ReduxDispatch = typeof store.dispatch
+export type ReduxState = ReturnType<typeof rootReducer>
+export type ReduxDispatch = ReturnType<typeof store.dispatch>
 
 const rrfProps = {
     ...reduxFirebaseProps,
