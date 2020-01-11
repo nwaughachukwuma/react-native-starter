@@ -25,6 +25,7 @@ const platformDependentCred = Platform.select({
         apiKey: 'AIzaSyDEwx73uX3M_g0AW1W7XjGtLcX3pq2jhEE',
     }
 });
+
 const reactNativeFirebaseConfig = {
     debug: true,
     ...platformDependentCred,
@@ -34,6 +35,7 @@ const reactNativeFirebaseConfig = {
     storageBucket: "eventsmag-dd342.appspot.com"
 };
 
+// read more on how to configure the wrapper: https://react-redux-firebase.com
 export const reduxFirebaseConfig = {
     userProfile: 'users', // save users profiles to 'users' collection
     enableClaims: true,  // we can now use userProfile.token.claims
@@ -42,6 +44,8 @@ export const reduxFirebaseConfig = {
     // For presence, am saving to user presence info in RDB path
     presence: 'presence', // where list of online users is stored in database
     sessions: 'sessions', // where list of user sessions is stored in database (presence must be enabled)
+    // this handler is useful when uploading files to firebase storage, 
+    // as it exposes useful metadata 
     fileMetadataFactory: (uploadRes: any, firebase: any, metadata: any) => {
         // upload response from Firebase's storage upload
         firebase.database.ServerValue = RNFirebase.database.ServerValue;
@@ -55,11 +59,9 @@ export const reduxFirebaseConfig = {
         }
     },
     onAuthStateChanged: (authData: any, firebase: any, dispatch: any) => {
-        // Clear redux-firestore and some vital user info
-        // state if auth does not exist (i.e logout)
-        if (!authData) {
-            // a centralized place to carry out clearing of app data 
-            //   dispatch({ type: ClearAppDataTypes.CLEAR_APP_DATA });
+        // Clear redux-firestore and other vital user/app info
+        if (!authData) { // (i.e. on logout)
+            // dispatch({ type: ClearAppDataTypes.CLEAR_APP_DATA });
         }
     }
 };
@@ -74,29 +76,27 @@ export default (rootReducer: any, initialState = { _persist: { version: 6, rehyd
         stateReconciler: autoMergeLevel2,
         debug: true,
         keyPrefix: '',
-        timeout: 2000, // null
+        timeout: 2000, // 0 || null
     };
-    // configure redux-firebase
     //@ts-ignore
     let firebase = RNFirebase.app() || RNFirebase.initializeApp(reactNativeFirebaseConfig);
     // Initialize other services on firebase instance
     RNFirebase.firestore();
-    // firebase.functions(); // <- needed if using httpsCallable
+    // RNFirebase.functions(); // <- needed if using httpsCallable
 
-    const composeEnhancer = compose;
+    const composeEnhancer = compose; 
+    // when using redux devtools: const composeEnhancer = global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
     // persist reducer
     const persistedReducer = persistReducer(persistConfig, rootReducer);
     const store = createStore(
         persistedReducer,
         initialState,
-        // when using redux devtools, wrap compose in a composeEnhancer object.
         composeEnhancer(
             applyMiddleware(sagaMiddleware)
         )
     );
 
     const persistor = persistStore(store);
-
     // then run the saga
     let sagasManager = sagaMiddleware.run(rootSaga, getFirebase)
     //@ts-ignore
