@@ -7,13 +7,16 @@ import {
 } from 'react-native'
 import { createStackNavigator } from 'react-navigation-stack';
 import get from 'lodash.get'
-import HomeScreen from 'screens/home'
-import Starter from 'screens/starter'
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { IconButton } from "react-native-paper";
 import { PreferencesContext } from 'utils/reactpatterns/contextapi'
 import { SCREEN_DIM } from 'utils'
 import { DrawerComponent } from 'components'
+import HomeScreen from 'screens/home'
+import Starter from 'screens/starter'
+import Payments from 'screens/payments'
+import Settings from 'screens/settings'
+import Profile from 'screens/profile'
 
 export const MainNavigator = createStackNavigator({
         Home: {
@@ -34,6 +37,15 @@ export const MainNavigator = createStackNavigator({
         },
         Starter: {
             screen: Starter
+        },
+        Payments: {
+            screen: Payments
+        },
+        Profile: {
+            screen: Profile
+        },
+        Settings: {
+            screen: Settings
         },
     },
     {

@@ -9,10 +9,16 @@ import {firestoreConnect} from 'react-redux-firebase'
 import isEmpty from 'lodash.isempty'
 import {ReduxState, ReduxDispatch} from 'networking/redux/types'
 import DeviceInfo from 'react-native-device-info';
-
+import Button from 'components/buttons'
+import {
+    NavigationScreenProp, 
+    NavigationState, 
+    NavigationParams
+} from 'react-navigation'
+  
 
 type Props = {
-
+    navigation: NavigationScreenProp<NavigationState, NavigationParams>
 }
 
 const styles = StyleSheet.create({
@@ -29,6 +35,7 @@ export const Welcome: React.FC<Props|any> = (props) => {
     const dbUsers = useSelector((select: ReduxState) => select.firestore.ordered.dbUsers);
 
     const {
+        navigation,
         theme: {colors},
     } = props
     // console.log('app state is :==>>', userAuth, userProfile, dbUsers);
@@ -38,9 +45,17 @@ export const Welcome: React.FC<Props|any> = (props) => {
 
     return (
         <View style={styles.container}>
-            <Text style={{color: colors.text}}>
+            <Text style={{color: colors.text, fontSize: 20}}>
                 Welcome to {appName}
             </Text>
+            <Button
+                mode="outline"
+                onPress={() => {
+                    navigation.navigate('Home')
+                }}
+            >
+                Go to App
+            </Button>
         </View>
     )
 }

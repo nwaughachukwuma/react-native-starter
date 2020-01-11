@@ -52,9 +52,9 @@ const styles = StyleSheet.create({
 });
 
 const menuItems = [
-  { label: "Profile", icon: "person", key: 0, route: null },
-  { label: "Payment", icon: "dollar", key: 1, route: null },
-  { label: "Settings", icon: "spinner-cog", key: 2, route: null }
+  { label: "Profile", icon: "person", key: 0, route: 'Profile' },
+  { label: "Payment", icon: "dollar", key: 1, route: 'Payment' },
+  { label: "Settings and Privacy", icon: "spinner-cog", key: 2, route: 'Settings' }
 ];
 
 export const CustomDrawerComponent: React.FC<Props | any> = props => {

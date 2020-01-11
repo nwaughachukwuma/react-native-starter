@@ -15,16 +15,22 @@ import { PreferencesContext } from 'utils/reactpatterns/contextapi'
 import { SCREEN_DIM, tabStyles } from 'utils'
 import { DrawerComponent } from 'components'
 
-export const MainNavigator = createStackNavigator({
+export const AuthFlow = createStackNavigator({
         Welcome: {
-            screen: Welcome,
+            screen: Welcome
+        },
+        Starter: {
+            screen: Starter,
             navigationOptions: ({navigation, screenProps}) => {
                 return {
-                    headerLeft: () => (
+                    headerTitle: 'RN-Starter',
+                    headerRight: () => (
                         <IconButton
-                            icon="menu"
+                            icon="home"
                             color={get(screenProps, 'appTheme.colors.text', '#000')}
-                            onPress={() => navigation.toggleDrawer()}
+                            onPress={() => {
+                                navigation.navigate('Welcome')
+                            }}
                         >
                             Menu
                         </IconButton>
@@ -32,14 +38,11 @@ export const MainNavigator = createStackNavigator({
                 }
             }
         },
-        Starter: {
-            screen: Starter
-        },
     },
     {
         // mode: 'card',
         // headerMode: 'none',
-        initialRouteName: 'Welcome',
+        initialRouteName: 'Starter',
         defaultNavigationOptions: ({ navigation, ...rest }) => {
             const { screenProps, navigationOptions, theme } = rest
             console.log('defaultNavigationOptions params: ', rest)
@@ -52,45 +55,6 @@ export const MainNavigator = createStackNavigator({
                     color: get(screenProps, 'appTheme.colors.text', '#000')
                 },
             }
-        }
-    }
-);
-
-export const drawerPreset = {
-    drawerWidth: (SCREEN_DIM.width * 3) / 4,
-    edgeWidth: 10, //* swipe 10px from the edge to open Drawer
-    hideStatusBar: false,
-    overlayColor: 'transparent', // gray
-    // // drawerType: "back", // this has issues. Please test these things well before leaving them in
-    // // set drawerPosition to support rtl toggle on android
-}
-
-const AuthFlow = createDrawerNavigator({
-        MainFlow: MainNavigator,
-    },
-    {
-        initialRouteName: "MainFlow",
-        ...drawerPreset,
-        drawerPosition: Platform.OS === "android" ?
-            (I18nManager.isRTL ? "right" : "left") :
-            'left',
-        contentComponent: (props) => (
-            <PreferencesContext.Consumer>
-              {preferences => (
-                <DrawerComponent
-                  toggleTheme={preferences.toggleTheme}
-                  toggleRTL={preferences.toggleRTL}
-                  isRTL={preferences.isRTL}
-                  isDarkMode={preferences.isDarkMode}
-                  isOnBackground={preferences.isOnBackground}
-                  {...props}
-                />
-              )}
-            </PreferencesContext.Consumer>
-        ),
-        contentOptions: {
-            activeTintColor: '#000000',
-            activeBackgroundColor: '#e6e6e6',
         }
     }
 );
