@@ -7,14 +7,15 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
-  Alert
+  Alert,
+  Platform
 } from 'react-native'
 import {withTheme, Avatar, Text, Switch, Divider} from 'react-native-paper'
 import {verticalScale, scale} from 'react-native-size-matters'
 import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {images} from 'utils'
+import {images} from 'utils/assets'
 import {SectionItem, SectionHeader} from './sections'
 import {getBottomSpace} from 'react-native-iphone-x-helper'
 import uuidv4 from 'uuid/v4'
@@ -59,7 +60,14 @@ const styles = StyleSheet.create({
     elevation: 1,
     left: 0,
     bottom: 0,
-    paddingBottom: getBottomSpace() + verticalScale(10),
+    ...Platform.select({
+      ios: {
+        paddingBottom: verticalScale(10),
+      },
+      android: {
+        paddingBottom: getBottomSpace() + verticalScale(10),
+      }
+    }),
     paddingTop: verticalScale(10)
   }
 });

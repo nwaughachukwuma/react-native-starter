@@ -63,6 +63,15 @@ export const MainNavigator = createStackNavigator({
                 headerTitleStyle: {
                     color: get(screenProps, 'appTheme.colors.text', '#000')
                 },
+                headerLeft: () => (
+                    <IconButton
+                        icon="arrow-left"
+                        color={get(screenProps, 'appTheme.colors.text', '#000')}
+                        onPress={() => {navigation.goBack()}}
+                    >
+                        Menu
+                    </IconButton>
+                )
             }
         }
     }
