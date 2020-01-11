@@ -22,7 +22,7 @@ const HomeScreen: React.FC<Props> = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={{color: colors.text}}>Home Screen</Text>
+      <Text style={{color: colors.text, fontSize: 20}}>Home Screen</Text>
     </View>
   );
 }

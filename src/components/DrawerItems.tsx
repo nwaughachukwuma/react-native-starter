@@ -2,19 +2,22 @@ import * as React from 'react';
 import { useState, useCallback, useEffect } from 'react'
 import {
   ScrollView,
+  FlatList,
   StyleSheet,
   TouchableOpacity,
   View,
   ImageBackground,
   Alert
 } from 'react-native'
-import {withTheme, Avatar, Text, Switch} from 'react-native-paper'
-import {scale} from 'react-native-size-matters'
+import {withTheme, Avatar, Text, Switch, Divider} from 'react-native-paper'
+import {verticalScale, scale} from 'react-native-size-matters'
 import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {images} from 'utils'
 import {SectionItem, SectionHeader} from './sections'
+import {getBottomSpace} from 'react-native-iphone-x-helper'
+import uuidv4 from 'uuid/v4'
 
 
 type Props = {
@@ -48,12 +51,38 @@ const styles = StyleSheet.create({
   },
   useremail: {
     color: '#fff'
+  },
+  listFooter: {
+    // position: "absolute",
+    // zIndex: 999,
+    left: 0,
+    // bottom: '-300%',
+    // backgroundColor: colors.surface,
+    // paddingBottom: getBottomSpace() + verticalScale(10),
+    // paddingTop: verticalScale(10),
+    // height: "100%",
+    // justifyContent: "space-between",
+    // alignItems: "flex-start",
+    // flexDirection: "row"
+  },
+  drawerFooter: {
+    // position: "absolute",
+    elevation: 1,
+    left: 0,
+    bottom: 0,
+    // backgroundColor: colors.surface,
+    paddingBottom: getBottomSpace() + verticalScale(10),
+    paddingTop: verticalScale(10),
+    // height: "100%",
+    // justifyContent: "space-between",
+    // alignItems: "flex-start",
+    // flexDirection: "row"
   }
 });
 
 const menuItems = [
   { label: "Profile", icon: "person", key: 0, route: 'Profile' },
-  { label: "Payment", icon: "dollar", key: 1, route: 'Payment' },
+  { label: "Payment", icon: "dollar", key: 1, route: 'Payments' },
   { label: "Settings and Privacy", icon: "spinner-cog", key: 2, route: 'Settings' }
 ];
 
@@ -78,15 +107,14 @@ export const CustomDrawerComponent: React.FC<Props | any> = props => {
   }, [])
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-          <ProfileSection
-              {...props}
-              // avatarBackground={avatarBackground}
-              // onPress={() => this.profileModal.open()} //* deprecated for now for time sake. Will work on it after release
-              onPress={() => props.navigation.navigate("Home")}
-            />
-          <MemoizedMenuSection {...props} />
-      </ScrollView>
+      <ProfileSection
+        {...props}
+        // avatarBackground={avatarBackground}
+        // onPress={() => this.profileModal.open()} //* deprecated for now for time sake. Will work on it after release
+        onPress={() => props.navigation.navigate("Home")}
+      />
+      <MemoizedMenuSection {...props} />
+      <DrawerFooter {...props}/>
     </SafeAreaView>
   )
 };
@@ -159,8 +187,7 @@ export const MenuSection: React.FC<Props|any> = (props) => {
   const [drawerIndex, setDrawerIndex] = useState<number|any>(null)
   const {
     navigation,
-    theme: { dark, colors },
-    toggleTheme,
+    theme: { colors }
   } = props;
 
   const _setDrawerItem = useCallback(
@@ -173,39 +200,66 @@ export const MenuSection: React.FC<Props|any> = (props) => {
   );
 
   return (
-    <View>
-      <SectionHeader {...props} title="Menu" />
-      {menuItems.map((props, index) => (
+    <FlatList 
+      contentContainerStyle={{flex: 1}}
+      style={{flex: 1}}
+      // ItemSeparatorComponent={(props) => <Divider {...props}/>}
+      data={menuItems}
+      ListHeaderComponent={<SectionHeader {...props} title="Menu" />}
+      keyExtractor={(item, index) => uuidv4()}
+      renderItem={({item, index}) => (
         <SectionItem
           {...props}
-          key={props.key}
-          onPress={() => _setDrawerItem(index, props.route)}
+          key={item.key}
+          onPress={() => _setDrawerItem(index, item.route)}
           iconColor={colors.text}
-          iconLeft={props.icon}
-          label={props.label}
+          iconLeft={item.icon}
+          label={item.label}
           labelStyle={[
             {
-              fontWeight: props.key === drawerIndex ? "bold" : "normal"
+              fontWeight: item.key === drawerIndex ? "bold" : "normal"
             }
           ]}
         />
-      ))}
-      <SectionItem
-        label={dark ? "Dark Mode" : "Dark Mode"}
-        onPress={toggleTheme}
-        iconLeft={dark? "night-clear": 'day-sunny'}
-        iconColor={colors.text}
-        labelStyle={[
-          {
-            color: colors.text,
-            fontStyle: "italic"
-          }
-        ]}
-      />
-    </View>
+      )}
+    />
   );
 }
 
-const MemoizedMenuSection = React.memo(MenuSection)
+const DrawerFooter: React.FC<Props|any> = (props) => {
 
+  const {
+    navigation,
+    theme: {dark, colors},
+    toggleTheme,
+  } = props
+
+  const exitApp = (route: string) => {
+    if (route) {
+      navigation.navigate(route);
+    }
+  }
+
+  return (
+    <View style={styles.drawerFooter}>
+      <Divider {...props}/>
+      <SectionItem
+        label={"Dark Mode"}
+        onPress={toggleTheme}
+        iconLeft={dark? "night-clear": 'day-sunny'}
+        iconColor={colors.text}
+        labelStyle={{color: colors.text, fontStyle: "italic"}}
+      />
+      <SectionItem
+        label={'Logout'}
+        onPress={() => exitApp('Welcome')}
+        iconLeft={'arrow-left'}
+        iconColor={colors.text}
+        labelStyle={{color: colors.text}}
+      />
+    </View>
+  )
+}
+
+const MemoizedMenuSection = React.memo(MenuSection)
 export default withTheme(CustomDrawerComponent)

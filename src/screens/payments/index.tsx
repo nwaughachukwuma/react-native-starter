@@ -22,7 +22,7 @@ const PaymentsScreen: React.FC<Props> = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={{color: colors.text}}>Payments Screen</Text>
+      <Text style={{color: colors.text, fontSize: 20}}>Payments Screen</Text>
     </View>
   );
 }

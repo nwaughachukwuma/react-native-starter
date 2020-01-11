@@ -22,7 +22,7 @@ const SettingsScreen: React.FC<Props> = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={{color: colors.text}}>Settings Screen</Text>
+      <Text style={{color: colors.text, fontSize: 20}}>Settings Screen</Text>
     </View>
   );
 }

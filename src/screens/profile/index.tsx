@@ -22,7 +22,7 @@ const ProfileScreen: React.FC<Props> = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={{color: colors.text}}>Profile Screen</Text>
+      <Text style={{color: colors.text, fontSize: 20}}>Profile Screen</Text>
     </View>
   );
 }

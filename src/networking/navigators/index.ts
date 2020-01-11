@@ -7,7 +7,7 @@ import AuthNavigator from './auth'
 const switchNavigator = createSwitchNavigator({
         Auth: AuthNavigator,
         Main: AppNavigator,
-        Onboarding: AppNavigator
+        // Onboarding: OnBoardNavigator // add an onboard nav
     },
     { initialRouteName: "Auth" }
 )
