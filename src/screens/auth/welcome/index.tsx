@@ -1,13 +1,14 @@
 import * as React from 'react';
 import {useEffect} from 'react'
-import { View, Text, StyleSheet, Alert } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import {withTheme} from  'react-native-paper'
 import {defaultStyles} from 'utils'
 import {compose} from 'redux'
 import {connect, useSelector} from 'react-redux'
-import {firestoreConnect, useFirestoreConnect} from 'react-redux-firebase'
+import {firestoreConnect} from 'react-redux-firebase'
 import isEmpty from 'lodash.isempty'
 import {ReduxState, ReduxDispatch} from 'networking/redux/types'
+import DeviceInfo from 'react-native-device-info';
 
 
 type Props = {
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
 
 export const Welcome: React.FC<Props|any> = (props) => {
 
-    // select
+    // selector hooks
     const userAuth: any = useSelector((select: ReduxState) => select.firebase.auth);
     const userProfile = useSelector((select: ReduxState) => select.firebase.profile);
     const dbUsers = useSelector((select: ReduxState) => select.firestore.ordered.dbUsers);
@@ -30,24 +31,22 @@ export const Welcome: React.FC<Props|any> = (props) => {
     const {
         theme: {colors},
     } = props
-    const _users = React.useCallback(
-        async () => {
-            return await Promise.resolve(setTimeout(()=> console.log('hey'), 1000));
-        }, []
-    )
-    console.log('app state is :==>>', userProfile, userAuth, dbUsers);
-    _users()
+    // console.log('app state is :==>>', userAuth, userProfile, dbUsers);
+
+    let appName = DeviceInfo.getApplicationName();
+    appName = appName.replace(/\w/i, char => char.toUpperCase());
+
     return (
         <View style={styles.container}>
             <Text style={{color: colors.text}}>
-                Welcome to Events Magazine
+                Welcome to {appName}
             </Text>
         </View>
     )
 }
 
 const mapStateToProps = (state: ReduxState) => ({
-    users: state.firestore.ordered['usersCol']
+    
 })
 
 const mapDispatchToProps = (dispatch: ReduxDispatch) => ({

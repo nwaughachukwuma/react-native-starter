@@ -20,8 +20,6 @@ const HomeScreen: React.FC<Props> = (props) => {
     theme: {colors}
   } = props
 
-  console.log('theme colors is: ', colors)
-
   return (
     <View style={styles.container}>
       <Text style={{color: colors.text}}>Home Screen</Text>

@@ -5462,6 +5462,11 @@ react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6, react-is
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
+react-native-device-info@^5.4.1:
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-5.4.1.tgz#507d2cd4be98813fc0421a35731b471b86ca194d"
+  integrity sha512-eb1fadKkaCy0C6p2gozGQ6vHO+rhQBh1FTN+l7pE23McfI7EKtp6Wy7OCexHvmEe6xsxoHK93cMiCsZuyaTnMA==
+
 react-native-dotenv@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-0.2.0.tgz#311551cb6a35a3dcfede648bded55c0e3ece579d"

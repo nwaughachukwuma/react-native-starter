@@ -7,7 +7,7 @@ import {
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
-import Feather from 'react-native-vector-icons/Feather'
+import Icons from 'react-native-vector-icons/Fontisto'
 
 
 type FCProps = {
@@ -72,9 +72,9 @@ const SectionItem: React.FC<Props> = (props) => {
           {...props}
           icon={({ size, color }) => (
             <>
-              <Feather
+              <Icons
                 name={iconLeft}
-                size={size * 0.8}
+                size={size * 0.7}
                 color={iconColor || colors.text}
               />
             </>
@@ -88,9 +88,9 @@ const SectionItem: React.FC<Props> = (props) => {
           <List.Icon
             {...props}
             icon={({ size, color }) => (
-              <Feather
+              <Icons
                 name={iconRight}
-                size={size * 0.8}
+                size={size * 0.7}
                 color={iconColor || colors.text}
               />
             )}

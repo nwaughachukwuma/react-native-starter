@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useState, useCallback, useEffect } from 'react'
 import {
   ScrollView,
-  SafeAreaView,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -13,6 +12,7 @@ import {withTheme, Avatar, Text, Switch} from 'react-native-paper'
 import {scale} from 'react-native-size-matters'
 import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-community/async-storage';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {images} from 'utils'
 import {SectionItem, SectionHeader} from './sections'
 
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     // marginBottom: scale(10),
   },
   imageBgContainer: {
-    top: scale(5),
+    top: scale(1),
     paddingLeft: scale(15),
     height: 'auto'
   },
@@ -52,8 +52,9 @@ const styles = StyleSheet.create({
 });
 
 const menuItems = [
-  { label: "Personal", icon: "user", key: 0, route: null },
-  { label: "Feedback", icon: "user", key: 1, route: null }
+  { label: "Profile", icon: "person", key: 0, route: null },
+  { label: "Payment", icon: "dollar", key: 1, route: null },
+  { label: "Settings", icon: "spinner-cog", key: 2, route: null }
 ];
 
 export const CustomDrawerComponent: React.FC<Props | any> = props => {
@@ -76,12 +77,8 @@ export const CustomDrawerComponent: React.FC<Props | any> = props => {
     })()
   }, [])
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
-        <SafeAreaView
-          style={styles.container}
-          forceInset={{ top: 'always', horizontal: 'never' }}
-        >
           <ProfileSection
               {...props}
               // avatarBackground={avatarBackground}
@@ -89,9 +86,8 @@ export const CustomDrawerComponent: React.FC<Props | any> = props => {
               onPress={() => props.navigation.navigate("Home")}
             />
           <MemoizedMenuSection {...props} />
-        </SafeAreaView>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   )
 };
 
@@ -137,11 +133,12 @@ const SwitchComponent = (props: any) => {
   const [isSwitchOn, setIsSwitchOn] = useState<boolean|any>(false)
   // console.log('switch component props', props)
   useEffect(() => {
+    console.log('am re-rendered')
     setIsSwitchOn(props.dark)
   }, [])
   
   const valueChanged = useCallback(
-    (value) => {
+    async (value) => {
       props.toggleTheme();
       setIsSwitchOn(value);
     },
@@ -196,9 +193,7 @@ export const MenuSection: React.FC<Props|any> = (props) => {
       <SectionItem
         label={dark ? "Dark Mode" : "Dark Mode"}
         onPress={toggleTheme}
-        iconLeft={dark? "moon": 'sun'}
-        ItemRight={(ownProps: any) => <SwitchComponent dark={dark} toggleTheme={toggleTheme} {...ownProps} />}
-        disablePress={true}
+        iconLeft={dark? "night-clear": 'day-sunny'}
         iconColor={colors.text}
         labelStyle={[
           {
