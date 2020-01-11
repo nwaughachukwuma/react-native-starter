@@ -84,10 +84,10 @@ apply from: "../../node_modules/react-native/react.gradle"
 
 project.ext.vectoricons = [
     iconFontNames: [ 
-        'Feather.ttf'
-		'Foundation.ttf'
-		'Ionicons.ttf'
-		'MaterialIcons.ttf'
+        'Feather.ttf',
+		'Foundation.ttf',
+		'Ionicons.ttf',
+		'MaterialIcons.ttf',
 		'MaterialCommunityIcons.ttf'
     ] // Name of the font files you want to copy
 ]
@@ -145,6 +145,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     splits {
         abi {

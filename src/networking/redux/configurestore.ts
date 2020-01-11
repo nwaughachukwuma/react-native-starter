@@ -6,19 +6,29 @@ import RNFirebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';
 import '@react-native-firebase/firestore';
 import '@react-native-firebase/database';
-import { getFirebase, createFirebaseInstance } from 'react-redux-firebase';
+import { getFirebase } from 'react-redux-firebase';
 import { createFirestoreInstance, actionTypes } from 'redux-firestore';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from '../sagas';
 import AsyncStorage from "@react-native-community/async-storage";
+import { Platform } from 'react-native'
 // import { ClearAppDataTypes } from './clearappdata';
 
 // redux-firebase integration
+const platformDependentCred = Platform.select({
+    ios: {
+        appId: '1:387976712874:ios:08059c05b4e8bf7af076d3',
+        apiKey: 'AIzaSyB7EOUBixPPkWrheYQP-haGzctxJMqjx-g',
+    },
+    android: {
+        appId: '1:387976712874:android:788e94525a9bf91e',
+        apiKey: 'AIzaSyDEwx73uX3M_g0AW1W7XjGtLcX3pq2jhEE',
+    }
+});
 const reactNativeFirebaseConfig = {
     debug: true,
-    appId: '1:387976712874:ios:08059c05b4e8bf7af076d3',
+    ...platformDependentCred,
     projectId: 'eventsmag-dd342',
-    apiKey: 'AIzaSyB7EOUBixPPkWrheYQP-haGzctxJMqjx-g',
     databaseURL: "https://eventsmag-dd342.firebaseio.com",
     messagingSenderId: "387976712874",
     storageBucket: "eventsmag-dd342.appspot.com"
@@ -68,7 +78,7 @@ export default (rootReducer: any, initialState = { _persist: { version: 6, rehyd
     };
     // configure redux-firebase
     //@ts-ignore
-    let firebase = RNFirebase.initializeApp(reactNativeFirebaseConfig);
+    let firebase = RNFirebase.app() || RNFirebase.initializeApp(reactNativeFirebaseConfig);
     // Initialize other services on firebase instance
     RNFirebase.firestore();
     // firebase.functions(); // <- needed if using httpsCallable

@@ -9,7 +9,8 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "postinstall": "cross-os postinstall",
-    "clean-build": "cross-os clean-build"
+    "clean-ios": "cross-os clean-build",
+    "clean-android": "cd android && ./gradlew clean && cd .. && yarn android"
   },
   "cross-os": {
     "postinstall": {
