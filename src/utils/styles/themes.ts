@@ -26,19 +26,40 @@ const fontConfig = {
 };
 
 export const primaryTheme = (dark = false) => {
-  const themeType = !dark ? {...DefaultTheme}: {...DarkTheme}
+  const themeType = dark ? {...DarkTheme}: {...DefaultTheme}
+  const custom_colors = customColors(dark)
+
   return {
     ...themeType,
     colors: {
       ...themeType.colors,
       primary: 'tomato',
       accent: 'yellow',
+      ...custom_colors
     },
     dark,
     // mode: 'adaptive',
     // @ts-ignore
     fonts: configureFonts(fontConfig)
 }};
+
+export const customColors = (dark: boolean) => {
+
+  const colors = !dark ? customDefaultColors: customDarkColors
+  return colors
+}
+
+const customDefaultColors = {
+  lightText: '#333',
+  grey: '#808080',
+  lightGrey: '#665'
+}
+
+const customDarkColors = {
+  lightText: '#78869A',
+  grey: '#c4c4c4',
+  lightGrey: '#f3f3f3'
+}
 
 export const appColors = {
   white: '#fff',
