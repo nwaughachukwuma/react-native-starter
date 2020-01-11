@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useCallback } from "react"
+import { useCallback, useEffect } from "react"
 import { TouchableOpacity, View } from "react-native";
 import { withTheme, Text, List } from "react-native-paper";
 import {
@@ -31,7 +31,6 @@ interface Props extends FCProps {
 };
 
 const SectionItem: React.FC<Props> = (props) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
   const {
     navigation,
     theme: { dark, colors },
@@ -48,12 +47,19 @@ const SectionItem: React.FC<Props> = (props) => {
     ItemRight
   } = props;
 
+  let isLoadingTimeout: NodeJS.Timeout;
+  let onPressTimeout: any;
+
+  useEffect(() => {
+    return () => {
+      if (isLoadingTimeout) clearTimeout(isLoadingTimeout)
+      if (onPressTimeout) clearTimeout(onPressTimeout)
+    }
+  }, [])
+
   const onLocalPress = useCallback(
     (onPressArg: any) => {
-      //* basically timeout for animation
-      setIsLoading(true);
-      setTimeout(onPressArg, 100); //* reduce to 100 due to using TouchableOpacity
-      setTimeout(() => setIsLoading(false), 1000);
+      onPressTimeout = setTimeout(onPressArg, 250);
     },
     []
   );

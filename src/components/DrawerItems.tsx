@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   profileContainer: {
-
     // marginBottom: scale(10),
   },
   imageBgContainer: {
@@ -53,30 +52,15 @@ const styles = StyleSheet.create({
     color: '#fff'
   },
   listFooter: {
-    // position: "absolute",
-    // zIndex: 999,
     left: 0,
-    // bottom: '-300%',
-    // backgroundColor: colors.surface,
-    // paddingBottom: getBottomSpace() + verticalScale(10),
-    // paddingTop: verticalScale(10),
-    // height: "100%",
-    // justifyContent: "space-between",
-    // alignItems: "flex-start",
-    // flexDirection: "row"
+    bottom: '0',
   },
   drawerFooter: {
-    // position: "absolute",
     elevation: 1,
     left: 0,
     bottom: 0,
-    // backgroundColor: colors.surface,
     paddingBottom: getBottomSpace() + verticalScale(10),
-    paddingTop: verticalScale(10),
-    // height: "100%",
-    // justifyContent: "space-between",
-    // alignItems: "flex-start",
-    // flexDirection: "row"
+    paddingTop: verticalScale(10)
   }
 });
 
@@ -92,7 +76,7 @@ export const CustomDrawerComponent: React.FC<Props | any> = props => {
     // use an IIFE
     (async function runAuth() {
       try {
-        // await auth().signInAnonymously();
+        await auth().signInAnonymously();
       } catch (e) {
         switch (e.code) {
           case 'auth/operation-not-allowed':
@@ -110,7 +94,6 @@ export const CustomDrawerComponent: React.FC<Props | any> = props => {
       <ProfileSection
         {...props}
         // avatarBackground={avatarBackground}
-        // onPress={() => this.profileModal.open()} //* deprecated for now for time sake. Will work on it after release
         onPress={() => props.navigation.navigate("Home")}
       />
       <MemoizedMenuSection {...props} />
@@ -121,9 +104,7 @@ export const CustomDrawerComponent: React.FC<Props | any> = props => {
 
 export const ProfileSection: React.FC<Props | any> = (props) => {
   const {
-    navigation,
     theme: { colors },
-    // avatarBackground,
     onPress,
     avatar=null,
     userName='James Ndika',
@@ -159,7 +140,6 @@ export const ProfileSection: React.FC<Props | any> = (props) => {
 
 const SwitchComponent = (props: any) => {
   const [isSwitchOn, setIsSwitchOn] = useState<boolean|any>(false)
-  // console.log('switch component props', props)
   useEffect(() => {
     console.log('am re-rendered')
     setIsSwitchOn(props.dark)
@@ -215,19 +195,18 @@ export const MenuSection: React.FC<Props|any> = (props) => {
           iconColor={colors.text}
           iconLeft={item.icon}
           label={item.label}
-          labelStyle={[
-            {
-              fontWeight: item.key === drawerIndex ? "bold" : "normal"
-            }
-          ]}
+          labelStyle={{
+            fontWeight: item.key === drawerIndex ? "bold" : "normal"
+          }}
         />
       )}
     />
   );
 }
+// memoize menu section
+const MemoizedMenuSection = React.memo(MenuSection)
 
 const DrawerFooter: React.FC<Props|any> = (props) => {
-
   const {
     navigation,
     theme: {dark, colors},
@@ -261,5 +240,4 @@ const DrawerFooter: React.FC<Props|any> = (props) => {
   )
 }
 
-const MemoizedMenuSection = React.memo(MenuSection)
 export default withTheme(CustomDrawerComponent)
