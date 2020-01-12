@@ -8,7 +8,7 @@ This repository is an opinionated starter for any React Native Project with need
 - Database & Storage
 - UI Library with inbuilt components and themes
 
-<img src="https://www.dropbox.com/s/xtsj652vvlb0go3/mixed.png?dl=0" width="700px" class="img-responsive" />
+<img src="https://dl.dropbox.com/s/xtsj652vvlb0go3/mixed.png?dl=0" width="700px" class="img-responsive" />
 
 ### Note: 
 1. RN-Starter is optimized for iOS and Android but has not been tested for other platforms such as Windows
