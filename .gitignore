@@ -71,3 +71,4 @@ ios/GoogleService-Info.plist
 # Environment var
 #
 .env
+.env.production
