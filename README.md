@@ -12,7 +12,7 @@ This repository is an opinionated starter for any React Native Project with need
 
 ![DarkMode](https://dl.dropbox.com/s/xtsj652vvlb0go3/mixed.png?dl=0=250x250)
 
-![DarkMode](https://dl.dropbox.com/s/xtsj652vvlb0go3/mixed.png?dl=0 | width=820)
+![DarkMode](https://dl.dropbox.com/s/xtsj652vvlb0go3/mixed.png?dl=0|width=820)
 
 ### Note: 
 1. RN-Starter is optimized for iOS and Android but has not been tested for other platforms such as Windows
