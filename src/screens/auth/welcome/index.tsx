@@ -7,7 +7,11 @@ import {compose} from 'redux'
 import {connect, useSelector} from 'react-redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import isEmpty from 'lodash.isempty'
-import {ReduxState, ReduxDispatch} from 'networking/redux/types'
+import {
+    ReduxState, 
+    ReduxDispatch, 
+    ReduxProps
+} from 'networking/redux/types'
 import DeviceInfo from 'react-native-device-info';
 import Button from 'components/buttons'
 import {
@@ -15,6 +19,7 @@ import {
     NavigationState, 
     NavigationParams
 } from 'react-navigation'
+import {authSelector} from 'networking/reselect'
   
 
 type Props = {
@@ -30,13 +35,13 @@ const styles = StyleSheet.create({
 export const Welcome: React.FC<Props|any> = (props) => {
 
     // selector hooks
-    const userAuth: any = useSelector((select: ReduxState) => select.firebase.auth);
-    const userProfile = useSelector((select: ReduxState) => select.firebase.profile);
-    const dbUsers = useSelector((select: ReduxState) => select.firestore.ordered.dbUsers);
+    const userProfile: object = useSelector((select: ReduxState) => select.firebase.profile);
+    const dbUsers: object[] = useSelector((select: ReduxState) => select.firestore.ordered.dbUsers);
 
     const {
         navigation,
         theme: {colors},
+        userAuth
     } = props
     // console.log('app state is :==>>', userAuth, userProfile, dbUsers);
 
@@ -68,14 +73,15 @@ const mapDispatchToProps = (dispatch: ReduxDispatch) => ({
 
 })
 
+// use react redux populate
 export default compose(
     withTheme,
     connect(
-        ({firebase}: ReduxState) => ({
-            userAuth: firebase.auth,
+        (state: ReduxState) => ({
+            userAuth: authSelector(state),
         })
     ),
-    firestoreConnect((props: any) => {
+    firestoreConnect((props: ReduxProps) => {
         if (isEmpty(props.userAuth)) return [];
         return [
             {

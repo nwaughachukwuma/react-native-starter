@@ -11,28 +11,13 @@ import { createFirestoreInstance, actionTypes } from 'redux-firestore';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from '../sagas';
 import AsyncStorage from "@react-native-community/async-storage";
-import { Platform } from 'react-native'
+import {firebaseConfig} from 'utils'
 // import { ClearAppDataTypes } from './clearappdata';
 
 // redux-firebase integration
-const platformDependentCred = Platform.select({
-    ios: {
-        appId: '1:387976712874:ios:08059c05b4e8bf7af076d3',
-        apiKey: 'AIzaSyB7EOUBixPPkWrheYQP-haGzctxJMqjx-g',
-    },
-    android: {
-        appId: '1:387976712874:android:788e94525a9bf91e',
-        apiKey: 'AIzaSyDEwx73uX3M_g0AW1W7XjGtLcX3pq2jhEE',
-    }
-});
-
 const reactNativeFirebaseConfig = {
     debug: true,
-    ...platformDependentCred,
-    projectId: 'eventsmag-dd342',
-    databaseURL: "https://eventsmag-dd342.firebaseio.com",
-    messagingSenderId: "387976712874",
-    storageBucket: "eventsmag-dd342.appspot.com"
+    ...firebaseConfig
 };
 
 // read more on how to configure the wrapper: https://react-redux-firebase.com

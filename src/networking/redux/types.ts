@@ -7,3 +7,9 @@ import {rootReducer, store} from './index'
 
 export type ReduxState = ReturnType<typeof rootReducer>
 export type ReduxDispatch = ReturnType<typeof store.dispatch>
+
+export type ReduxProps = {
+  userAuth: object
+  userProfile: object
+  dbUsers: object[]
+}
