@@ -27,16 +27,16 @@ This repository is an opinionated starter for any React Native Project with need
 - run the app: `react-native run-(ios|android)`
 
 
-> See my other [starter project](https://github.com/nwaughachukwuma/eventsmag#installation) If you want to integrate Cloud Functions
+> See my other [starter project](https://github.com/nwaughachukwuma/eventsmag#installation) if you want to integrate Cloud Functions
 
-This is an opinionated starter project based on my approach to building Hybrid Mobile Apps using React-Native and based on the tools I consider to be useful. I have chosen certain libraries over others because of the performance they bring to an App and the ease to quickly build prototypes from UI designs. Please find below a list of the integrations in use:
+This is an opinionated starter project based on my approach to building Hybrid Mobile Apps using React-Native and based on the tools I consider useful. I have chosen certain libraries over others because of the performance they bring to an App and the ease to quickly build prototypes from UI designs. Please find below a list of the integrations in use:
 
 - React Native (v0.61.5)
 - TypeScript
-- React Navigation (V4): provides routing and navigation to React-Native apps. Read more here: [React-Navigation](https://reactnavigation.org)
-- React Native Paper (v3): a material design library for react native, providing so many reusable components and support for `dark mode`. [RN-Paper](https://github.com/callstack/react-native-paper)
+- React Navigation (V4): provides routing and navigation to React-Native apps. [React-Navigation](https://reactnavigation.org)
+- React Native Paper (v3): a material design library for react native, providing reusable components and support for `dark mode`. [RN-Paper](https://github.com/callstack/react-native-paper)
 - React Native Firebase (v6): a popular firebase library for react native, providing firebase integrations for RDB, storage, firestore, MLkit, cloud functions, cloud messaging, etc. [RNFirebase](https://github.com/invertase/react-native-firebase)
-- React-Redux-Firebase (v3): a redux binding for firebase which provides wrappers and recipes for firebase auth, firestore, RDB, storage, etc.
+- React-Redux-Firebase (v3): a redux binding for firebase which provides wrappers for firebase auth, firestore, RDB, storage, etc.
 - React-Native-Vector-Icons [RNVI](https://github.com/oblador/react-native-vector-icons)
 - Redux Saga
 - Reselect
