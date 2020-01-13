@@ -48,7 +48,7 @@ The purpose of this starter is to provide React Native developers a ready-made k
 [ ] Testing with Jest and Enzyme
 
 
-**Contributors**
+**Contributor(s)**
 - [Chukwuma Nwaugha](https://github.com/nwaughachukwuma)
 
 #### 👏 ✌️
