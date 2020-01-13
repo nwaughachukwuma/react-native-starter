@@ -19,6 +19,7 @@ This repository is an opinionated starter for any React Native Project with need
 - git clone https://github.com/nwaughachukwuma/react-native-starter <custom-project-name>
 - cd custom-project-name
 - yarn/npm install
+- rename the project to your App name (custom-project-name) using [react-native-rename](https://github.com/junedomingo/react-native-rename)
 - setup A project on [Firebase](https://firebase.google.com/?gclid=CjwKCAiApOvwBRBUEiwAcZGdGA8gxr9zjboPhMhZJ_3u7urjhBFygGULUVsxNasFqE8_vLSuVDPA6xoCURIQAvD_BwE). You can use [this guide](https://invertase.io/oss/react-native-firebase/quick-start/create-firebase-project) 
 - add firebase to the app: 
   - for [ios](https://invertase.io/oss/react-native-firebase/quick-start/ios-firebase-credentials)
